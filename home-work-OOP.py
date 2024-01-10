@@ -11,8 +11,7 @@ class Student:
 		self.finished_courses.append(course_name)
 
 	def rate_lecturer(self, lecturer, course, grade):
-		if isinstance(lecturer,
-					  Lecturer) and course in self.courses_in_progress and course in lecturer.courses_attached:
+		if isinstance(lecturer, Lecturer) and course in self.courses_in_progress and course in lecturer.courses_attached:
 			if course in lecturer.grades:
 				lecturer.grades[course] += [grade]
 			else:
@@ -45,21 +44,22 @@ class Reviewer(Mentor):
 			return 'Ошибка'
 
 
-best_student = Student('Ruoy', 'Eman', 'your_gender')
-best_student.courses_in_progress += ['Python']
+best_student = Student('Ruoy', 'Eman', 'Male')
+best_student.courses_in_progress += ['Python', 'Git']
+best_student.finished_courses += ['Введение в программирование']
 
 cool_lecturer = Lecturer('Some', 'Buddy')
-cool_lecturer.courses_attached += ['Python']
+cool_lecturer.courses_attached += ['Python', 'Git']
 
-best_student.rate_lecturer(cool_lecturer, 'Python', 10)
-best_student.rate_lecturer(cool_lecturer, 'Python', 10)
+cool_reviewer = Reviewer('Some', 'Buddy')
+cool_reviewer.courses_attached += ['Python']
 
-cool_mentor = Reviewer('Some', 'Buddy')
-cool_mentor.courses_attached += ['Python']
+best_student.rate_lecturer(cool_lecturer, 'Python', 8)
+best_student.rate_lecturer(cool_lecturer, 'Git', 10)
 
-cool_mentor.rate_hw(best_student, 'Python', 10)
-cool_mentor.rate_hw(best_student, 'Python', 10)
-cool_mentor.rate_hw(best_student, 'Python', 10)
+cool_reviewer.rate_hw(best_student, 'Python', 7)
+cool_reviewer.rate_hw(best_student, 'Python', 6)
+cool_reviewer.rate_hw(best_student, 'Python', 10)
 
 print(best_student.grades)
 print(cool_lecturer.grades)
