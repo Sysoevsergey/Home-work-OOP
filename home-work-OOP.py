@@ -159,7 +159,6 @@ reviewer_id2.rate_hw(student_id2, 'C++', 9)
 reviewer_id2.rate_hw(student_id2, 'Git', 9)
 reviewer_id2.rate_hw(student_id2, 'Git', 10)
 
-
 print(student_id1, student_id2, sep='\n')
 print(student_id1 > student_id2)
 print(lecturer_id1, lecturer_id2, sep='\n')
