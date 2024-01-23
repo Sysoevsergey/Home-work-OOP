@@ -40,17 +40,17 @@ class Student:
 			f'Завершенные курсы: {", ".join(self.finished_courses)}'
 		return info
 
-	def __eq__(self, student):  # для равенства ==
+	def __eq__(self, student):
 		if not isinstance(student, Student):
 			print(f'Не является студентом.')
 		return self.get_average_grades() == student.get_average_grades()
 
-	def __ne__(self, student):  # для неравенства !=
+	def __ne__(self, student):
 		if not isinstance(student, Student):
 			print(f'Не является студентом.')
 		return self.get_average_grades() != student.get_average_grades()
 
-	def __lt__(self, student):  # для оператора меньше <
+	def __lt__(self, student):
 		if not isinstance(student, Student):
 			print(f'Не является студентом.')
 		return self.get_average_grades() < student.get_average_grades()
@@ -88,17 +88,17 @@ class Lecturer(Mentor):
 			f'Средняя оценка за лекции: {self.average_grades:.1f}'
 		return info
 
-	def __eq__(self, lecturer):  # для равенства ==
+	def __eq__(self, lecturer):
 		if not isinstance(lecturer, Lecturer):
 			print(f'Не является студентом.')
 		return self.get_average_grades() == lecturer.get_average_grades()
 
-	def __ne__(self, lecturer):  # для неравенства !=
+	def __ne__(self, lecturer):
 		if not isinstance(lecturer, Lecturer):
 			print(f'Не является студентом.')
 		return self.get_average_grades() != lecturer.get_average_grades()
 
-	def __lt__(self, lecturer):  # для оператора меньше <
+	def __lt__(self, lecturer):
 		if not isinstance(lecturer, Lecturer):
 			print(f'Не является студентом.')
 		return self.get_average_grades() < lecturer.get_average_grades()
@@ -124,19 +124,19 @@ student_id1.courses_in_progress += ['Python']
 student_id1.courses_in_progress += ['Git']
 student_id1.finished_courses = ['Введение в програмирование']
 student_id2 = Student('John', 'Doe', 'your_gender')
-student_id2.courses_in_progress += ['C++']
+student_id2.courses_in_progress += ['Python']
 student_id2.courses_in_progress += ['Git']
-student_id2.finished_courses = ['Введение в програмирование', 'Python']
+student_id2.finished_courses = ['Введение в програмирование']
 
 lecturer_id1 = Lecturer('Some', 'Buddy')
-lecturer_id1.courses_attached += ['Python']
+lecturer_id1.courses_attached += ['Python', 'C++']
 lecturer_id2 = Lecturer('Peter', 'Parker')
-lecturer_id2.courses_attached += ['C++', 'Git']
+lecturer_id2.courses_attached += ['Python', 'Git']
 
 reviewer_id1 = Reviewer('Some', 'Buddy')
-reviewer_id1.courses_attached += ['Python']
+reviewer_id1.courses_attached += ['Python', 'C++']
 reviewer_id2 = Reviewer('Peter', 'Parker')
-reviewer_id2.courses_attached += ['C++', 'Git']
+reviewer_id2.courses_attached += ['Python', 'Git']
 
 student_id1.rate_lecturer(lecturer_id1, 'Python', 9)
 student_id1.rate_lecturer(lecturer_id1, 'Python', 8)
@@ -159,7 +159,40 @@ reviewer_id2.rate_hw(student_id2, 'C++', 9)
 reviewer_id2.rate_hw(student_id2, 'Git', 9)
 reviewer_id2.rate_hw(student_id2, 'Git', 10)
 
-print(student_id1, student_id2, sep='\n')
-print(student_id1 > student_id2)
-print(lecturer_id1, lecturer_id2, sep='\n')
-print(lecturer_id1 != lecturer_id2)
+print('____________', student_id1, '____________', student_id2, '____________', sep='\n')
+print(student_id1 > student_id2, student_id1 < student_id2, student_id1 == student_id2, student_id1 != student_id2)
+print('____________', lecturer_id1, '____________', lecturer_id2, '____________', sep='\n')
+print(
+	lecturer_id1 > lecturer_id2, lecturer_id1 < lecturer_id2, lecturer_id1 == lecturer_id2, lecturer_id1 != lecturer_id2)
+
+
+def calculate_average_grades_students_for_course(course, students):
+	total_grades = 0
+	count = 0
+	for student in students:
+		if course in student.grades:
+			total_grades += sum(student.grades[course])
+			count += len(student.grades[course])
+	average = total_grades / count if count != 0 else 0
+	return average
+
+
+def calculate_average_grades_lecturers_for_course(course, lecturers):
+	total_grades = 0
+	count = 0
+	for lecturer in lecturers:
+		if course in lecturer.grades:
+			total_grades += sum(lecturer.grades[course])
+			count += len(lecturer.grades[course])
+	average = total_grades / count if count != 0 else 0
+	return average
+
+
+students_list_1 = calculate_average_grades_students_for_course('Git', [student_id1, student_id2])
+students_list_2 = calculate_average_grades_students_for_course('Python', [student_id1, student_id2])
+lecturers_list_1 = calculate_average_grades_lecturers_for_course('Git', [lecturer_id1, lecturer_id2])
+lecturers_list_2 = calculate_average_grades_lecturers_for_course('Python', [lecturer_id1, lecturer_id2])
+print(f'Средняя оценка по курсу "Git" у студентов: {students_list_1:.1f}')
+print(f'Средняя оценка по курсу "Python" у студентов: {students_list_2:.1f}')
+print(f'Средняя оценка по курсу "Git" у лекторов: {lecturers_list_1:.1f}')
+print(f'Средняя оценка по курсу "Python" у лекторов: {lecturers_list_2:.1f}')
